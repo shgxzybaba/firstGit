@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${student.name}">Student</title>
+</head>
+<body>
+    <!--<div>-->
+        <!---->
+    <!--</div>-->
+    <div>
+        <h2 th:text="${student.name}">Student name</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Detail</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Age:</td>
+                    <td th:text="${student.age}">12</td>
+                </tr>
+                <tr>
+                    <td>Sex</td>
+                    <td th:text="${student.sex}">M</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <table id="scorestable" align="centre" cellpadding="9" draggable="true">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Score</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody th:each="score: *{scores}">
+                <tr>
+                    <td th:text="${score.course.name}">Course1</td>
+                    <td th:text="${score.value}">45</td>
+                    <td th:text="${score.grade}">D</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

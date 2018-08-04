@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${course.name}">Course</title>
+
+</head>
+<body>
+    <h1>Update your student scores</h1>
+
+    <div align="centre">
+        <form method="get" action="${givenAction}" name="scoreform" id="scoreform">
+            <table>
+                <thead>
+                <tr>
+                    <th>StudentID</th>
+                    <th>Student Name</th>
+                    <th>Student Score</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <div th:each="student: *{students}">
+                    <tr>
+                    <td th:text="${student.id}">1</td>
+                    <td th:text="${student.name}">Name</td>
+                    <td>
+                        <input type="text" name="score" form="scoreform" placeholder="score" th:value="#{scores.add}"/>
+                    </td>
+
+                    </tr>
+                </div>
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><input type="submit" value="Save"></td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <script language="JavaScript">
+        document.writeln("<p>Status</p>");
+        function handle(){
+         alert("score entered")
+         }
+    </script>
+</body>
+</html>

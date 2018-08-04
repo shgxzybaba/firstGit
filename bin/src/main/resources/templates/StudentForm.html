@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <<meta name="viewport" content="width=device-width, initial-scale= 1.0"/>
+    <title>Student Form</title>
+</head>
+<body>
+    <h1>Fill in student's details below</h1>
+    <div>
+        <form method="post" th:action="${givenAction}">
+            <label>Name:
+                <input name="Name" type="text" th:value="${givenName}" size="25" placeholder="Student's firstname"/>
+            </label>
+            <p>Sex: <br>
+                Male:
+                    <input name="Sex" type="radio" th:value="M"/>
+                Female:
+                    <input name="Sex" type="radio" th:value="F"/>
+                </br>
+            </p>
+            <div>
+                <label>Select a classrooms
+                    <select name="classId" id="classId">
+                        <div th:each="classrooms : *{classrooms}">
+                            <option th:text="${classrooms.Id}"></option>
+                        </div>
+
+                    </select>
+                </label>
+            </div>
+            <p>
+                <button type="submit" onclick="handle()">Post</button>
+                <script language="JavaScript">
+                    function handle(){
+                    alert("student saved")
+                    }
+                </script>
+            </p>
+        </form>
+    </div>
+    <div>
+        <p><em><a th:href="@{http://localhost:8080/}" href="home.html">Return to classroom home</a></em></p>
+    </div>
+
+</body>
+</html>

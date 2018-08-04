@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Course Form</title>
+</head>
+<body>
+<h1>Save Courses on this page</h1>
+<div>
+    <form th:action="${givenAction}" method="post">
+        <p>Course Name:<br>
+            <input type="text" placeholder="Enter the name of the course" size="34" name="givenName" th:value="${givenName}"/>
+        </p>
+        <p>Enter a brief description of the course below:<br>
+            <input type="text" aria-rowspan="3" size="68" placeholder="Text here" th:value="${givenDescription}" name="givenDescription"/>
+        </p>
+        <table>
+            <tr th:each="faculty, stat: *{wrapper.faculties}">
+                <td th:text="${faculty.value}">Value</td>
+                <td><input type="checkbox" th:name="|faculties[${stat.index}]|" th:value="${faculty}" th:checked="${faculty}"/></td>
+            </tr>
+
+        </table>
+        <input type="submit" value="Save"/>
+        </p>
+    </form>
+</div>
+
+</body>
+</html>
