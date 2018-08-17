@@ -9,7 +9,7 @@ import com.shgxzyjune.personalproject.student.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@CrossOrigin
 @RestController
 public class CourseController {
 

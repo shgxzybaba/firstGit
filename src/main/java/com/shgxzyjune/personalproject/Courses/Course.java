@@ -20,29 +20,27 @@ public class Course {
     private int id;
 
     @NotNull
-    @Size(min = 2, max = 12)
+    @Size(min = 2, max = 25)
     private String name;
-    @Size(max = 25)
-    private String description;
 
+    @Column(length = 500)
+    private String description;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL) //, fetch = FetchType.LAZY)
     private List<Student> students = new ArrayList<>(); //todo convert this to a set
 
-    @JsonIgnore
+//    @JsonIgnore
     @ElementCollection
     @Enumerated(value = EnumType.STRING)
     private List<Faculty> faculties;
     
-    //@JsonIgnore
+    @JsonIgnore
     @OneToOne(mappedBy = "course",cascade = CascadeType.ALL)
-    
     private Score score = new Score();
 
     public Course() {
     }
-
 
     public int getId() {
         return id;
@@ -67,7 +65,6 @@ public class Course {
     public void setDescription(String description) {
         this.description = description;
     }
-
 
     public List<Student> getStudents() {
         return students;
@@ -104,7 +101,5 @@ public class Course {
     public void setScore(Score score) {
         this.score = score;
     }
-    
-    
 
 }

@@ -27,24 +27,20 @@ public class ClassRoomService {
     public void addClassRoom(Classroom tcr, String s) {
 
         tcr.setFaculty(s);
-
         classRoomRepository.save(tcr);
-        //todo test
     }
 
     public Classroom getClassRoom(int classroomName) {
         return classRoomRepository.findById(classroomName).orElse(null);
     }
 
-
-
     public Student getClassStudent(int c, int studentId) {
         List<Student> students = getClassStudents(c);
-        return students.stream().filter(student1 -> student1.getId() == (studentId)).findFirst().get(); //returns a student object
+        return students.stream().filter(student1 -> student1.getId() == (studentId)).findFirst().get();
     }
 
     public List<Student> getClassStudents(int c) {
-//        Classroom classRoom = getClassRoom(c);
+
         List<Student> students = classRoomStudentRepository.findByClassroomId(c);
         return students;
     }
@@ -74,17 +70,11 @@ public class ClassRoomService {
     //a method that marks a student as either present or absent
 
     public void takeRollCall(int studentId) {
-        Register register = registerRepository.findByStudentId(studentId);
-//        List<Student> students = register.getStudent();
-        register.getStatuses().add(new Status()); //the student is present
+        Student student = studentService.getStudent(studentId);
+        Register register = student.getRegister();
+        register.getStatuses().add(new Status());
         registerRepository.save(register);
 
     }
 
-    public void addRegister(int studentID,int classID) {
-        Register register = new Register();
-        register.setStudent(studentService.getStudent(studentID));
-        register.setClassroom(getClassRoom(classID));
-        registerRepository.save(register);
-    }
 }

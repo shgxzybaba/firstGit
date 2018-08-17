@@ -38,66 +38,48 @@ public class StudentService {
     @Autowired
     ScoreService scoreService;
 
-
-
     public List<Student> getStudents() {
 
         List<Student> students = new ArrayList<>();
         for (Student student : studentRepository.findAll()) {
             students.add(student);
         }
-
         return students;
     }
 
     public Student getStudent(int id){
-        //return students.stream().filter(courses -> courses.getId()==(id)).findFirst().get();
         Student student;
         student = studentRepository.findById(id).orElseThrow(() -> new ResourseNotFound("Class","student",id));
         return  student;
-
     }
 
     public void addStudent(Student student, int classId) {
 
-        //todo using randomly generated ages for now until i figure out how to parse JSON to Date format
-
-        Random random = new Random();
-        int year = 1990 + random.nextInt(6);
-        int month = 1 + random.nextInt(11);
-        int day;
-        if (month == 2) {
-            day = 1 + random.nextInt(27);
-        }else
-            day = 1 + random.nextInt(29);
-        student.setBirthDay(year,month,day);
         student.setAge();
+        Register register = new Register();
+        registerRepository.save(register);
 
-        Classroom classroom = classRoomService.getClassRoom(classId); //todo
+        Classroom classroom = classRoomService.getClassRoom(classId);
         student.setClassroom(classroom);
-
+        student.setRegister(register);
 
 // todo throw an exception if an already existing student name is entered
         studentRepository.save(student);
-
-
     }
 
     public void updateStudent(int id, Student student) {
         studentRepository.save(student);
-
     }
 
     public void deleteStudent(int id) {
-        //students.removeIf(courses -> courses.getId()==(id));
-
         studentRepository.deleteById(id);
     }
+
     public void addCourse(int id, int courseId){
         Course course = courseService.getCourse(courseId);
         Student st = studentRepository.findById(id).orElse(null);
         st.getCourses().add(course);
-        studentRepository.save(st); //todo verify
+        studentRepository.save(st);
     }
 
     public Set<Course> getStudentCourses(int studentId){
@@ -106,23 +88,19 @@ public class StudentService {
 
     public Course getCourse(int studentId, int courseId){
         return  getStudent(studentId).getCourses().stream().filter(course -> course.getId()==(courseId)).findFirst().get();
-
     }
 
     public Course getCourse(Student student, int courseId){
        return getCourse(student.getId(),courseId);
     }
 
-    public  void populateMandatoryCourses(int studentId){ //adds all the required courses for a given faculty to a student
-//        int classId = student.getClassrooms().getId();
+    public  void populateMandatoryCourses(int studentId){
         Student student = getStudent(studentId);
         int classId = student.getClassroom().getId();
         Faculty faculty = classRoomService.getClassRoom(classId).getFaculty();
         List<Course> courseList = courseService.getFacultyCourses(faculty);
         student.getCourses().addAll(courseList);
         studentRepository.save(student);
-//        scoreService.SetAllDefaultScores(studentId);
-
     }
 
     public List<Student> getSortedClassStudent(int classId) { //todo test this method

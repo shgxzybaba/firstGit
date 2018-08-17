@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 
 public class ClassRoomController {
@@ -14,11 +14,8 @@ public class ClassRoomController {
     @Autowired
     ClassRoomService classRoomService;
 
-
-
     @RequestMapping("/classes")
     public List<Classroom> getAllClassRooms() {
-        //stuff
         return classRoomService.getClasses();
     }
 
@@ -27,22 +24,14 @@ public class ClassRoomController {
         return classRoomService.getClassRoom(c);
     }
 
-
-    //flagged
     @RequestMapping(method = RequestMethod.POST, value = "/class/{faculty}/save")
     public void addClassroom(@RequestBody Classroom c, @PathVariable String faculty) {
         classRoomService.addClassRoom(c, faculty);
-        //stuff
     }
 
     @GetMapping(value = "/classes/faculty/{faculty}")
     public List<Classroom> getClassesByFaculty(@PathVariable String faculty) {
         return classRoomService.getClassesByFaculty(faculty);
-    }
-
-    @GetMapping("/classes/{classId}/students/{studentID}/addRegister")
-    public void addToRegister(@PathVariable int classId, @PathVariable int studentID) {
-        classRoomService.addRegister(studentID,classId);
     }
 
     @GetMapping("/rollcall/{studentID}")

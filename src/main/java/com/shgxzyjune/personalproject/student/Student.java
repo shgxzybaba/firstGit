@@ -3,7 +3,7 @@ package com.shgxzyjune.personalproject.student;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shgxzyjune.personalproject.Courses.Course;
 import com.shgxzyjune.personalproject.classroom.Classroom;
-import org.hibernate.validator.constraints.UniqueElements;
+import com.shgxzyjune.personalproject.classroom.Register;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -12,10 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -27,33 +24,36 @@ public class Student {
     private int id;
 
     @NotEmpty
-    @Column(unique = true, nullable = false) //added this removed @NotNull
-    private String name;
+    @Column(unique = true, nullable = false)
+    private String name; //todo will change this to an embedded object with first name and last name
     private String  sex;
 
-    @DateTimeFormat //added so as to persist as date time format
+    @DateTimeFormat
     private LocalDate birthDay;
     private Integer age;
 
 
-    @ManyToOne(cascade = CascadeType.ALL) //(fetch = FetchType.LAZY) //todo why cant i use lazy initializer
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "classroom", nullable = false)
     private Classroom classroom;
 
 
     @JsonIgnore
-    @ManyToMany(cascade = CascadeType.ALL) //(fetch = FetchType.LAZY) //(mappedBy = "students")
+    @ManyToMany(cascade = CascadeType.ALL)
     private  Set<Course> courses = new HashSet<>();
+
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    private Register register;
 
 
     public Student() {
     }
-//
+
     public Student(int id, String name, String sex, int classroomId) {
         setId(id);
         setName(name);
         setSex(sex);
-        //setId(id);
         setClassroom(new Classroom(classroomId));
     }
 
@@ -118,5 +118,13 @@ public class Student {
         Long theAge = getBirthDay().until(today, ChronoUnit.YEARS);
         this.age = Math.toIntExact(theAge);
 
+    }
+
+    public Register getRegister() {
+        return register;
+    }
+
+    public void setRegister(Register register) {
+        this.register = register;
     }
 }

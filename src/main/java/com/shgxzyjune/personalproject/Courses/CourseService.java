@@ -23,12 +23,8 @@ public class CourseService {
     public CourseService() {
     }
 
-
     public List<Course> getCourses(int studentId) {
-
-//        List<Course> courses = new ArrayList<>();
-        return courseRepository.findByStudentsId(studentId); //.forEach(courses::add);
-
+        return courseRepository.findByStudentsId(studentId);
     }
 
     public Course getCourse(int id) {
@@ -56,8 +52,7 @@ public class CourseService {
 
     public Student getStudent(int courseId, int studentId) {
         List<Student> students = getAllStudents(courseId);
-        return students.stream().filter(student1 -> student1.getId() == (studentId)).findFirst().get(); //returns a student object
-
+        return students.stream().filter(student1 -> student1.getId() == (studentId)).findFirst().get();
     }
 
     public List<Student> getAllStudents(int id) {

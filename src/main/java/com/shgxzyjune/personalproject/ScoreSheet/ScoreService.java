@@ -27,28 +27,19 @@ public class ScoreService {
 
     public void setScoreValue(Score score, int courseId, int studentId) { //todo verify this method
         score.setGrade(score.getValue());
-//       
-////        courseService.getCourse(courseId).getScore().add(score);
-//        
-////        courseService.updateCourse(courseService.getCourse(courseId));//culprit code
-//        scoreRepository.save(score);
         Course course = courseService.getStudentCourse(courseId, studentId);
         score.setCourse(courseService.getCourse(courseId));
-        //course.setScore(score); 
         score.setStudent(studentService.getStudent(studentId));
         scoreRepository.save(score);
 
     }
 
     public List<Score> getCourseScores(int courseId) {
-        return scoreRepository.findByCourseId(courseId); //.forEach(scores::add);
+        return scoreRepository.findByCourseId(courseId);
     }
 
     public List<Score> getStudentScores( int studentId) {
-
         return scoreRepository.findByStudentId(studentId);
-        //return scores;
-
     }
 
     public Score getSingleScore(int studentId, int courseId) {

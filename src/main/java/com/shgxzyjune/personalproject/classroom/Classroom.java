@@ -20,13 +20,8 @@ public class Classroom {
     @Enumerated(EnumType.STRING)
     private Faculty faculty;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    Register register;
-
-
     public Classroom() {
     }
-
 
     public Classroom(Integer c) { //to wrap instead of (int)
         this.id = c;
@@ -66,11 +61,4 @@ public class Classroom {
             setFaculty(Faculty.COMMERCIAL);
     }
 
-//    public Register getRegister() {
-//        return register;
-//    }
-//
-//    public void setRegister(Register register) {
-//        this.register = register;
-//    }
 }
