@@ -13,15 +13,15 @@ import java.util.List;
 public class ClassRoomService {
 
     @Autowired
-    ClassRoomRepository classRoomRepository;
+    private ClassRoomRepository classRoomRepository;
     @Autowired
-    ClassRoomStudentRepository classRoomStudentRepository;
+    private ClassRoomStudentRepository classRoomStudentRepository;
 
     @Autowired
-    RegisterRepository registerRepository;
+    private RegisterRepository registerRepository;
 
     @Autowired
-    StudentService studentService;
+    private StudentService studentService;
 
 
     public void addClassRoom(Classroom tcr, String s) {
